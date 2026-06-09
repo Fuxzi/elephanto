@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Jun 08, 2026 at 09:38 PM
+-- Generation Time: Jun 09, 2026 at 05:37 AM
 -- Server version: 10.4.32-MariaDB
 -- PHP Version: 8.0.30
 
@@ -328,16 +328,20 @@ CREATE TABLE `transaksi` (
   `id_pemesanan` int(11) DEFAULT NULL,
   `total` float DEFAULT NULL,
   `metode_pembayaran` enum('Tunai','Transfer') DEFAULT 'Tunai',
-  `status` enum('Belum Dibayar','Lunas','Batal') DEFAULT 'Belum Dibayar'
+  `status` enum('Belum Dibayar','Lunas','Batal') DEFAULT 'Belum Dibayar',
+  `booking_fee` decimal(15,2) NOT NULL DEFAULT 500000.00,
+  `dp` decimal(15,2) DEFAULT NULL,
+  `sisa_pembayaran` decimal(15,2) NOT NULL DEFAULT 0.00,
+  `dp_booking` decimal(15,2) NOT NULL DEFAULT 500000.00
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
 -- Dumping data for table `transaksi`
 --
 
-INSERT INTO `transaksi` (`id_transaksi`, `id_pemesanan`, `total`, `metode_pembayaran`, `status`) VALUES
-(1, 1, 450000000, 'Tunai', 'Belum Dibayar'),
-(2, 2, 300000000, 'Transfer', 'Lunas');
+INSERT INTO `transaksi` (`id_transaksi`, `id_pemesanan`, `total`, `metode_pembayaran`, `status`, `booking_fee`, `dp`, `sisa_pembayaran`, `dp_booking`) VALUES
+(1, 1, 450000000, 'Tunai', 'Belum Dibayar', 500000.00, NULL, 449500000.00, 500000.00),
+(2, 2, 300000000, 'Transfer', 'Lunas', 500000.00, NULL, 299500000.00, 500000.00);
 
 -- --------------------------------------------------------
 
