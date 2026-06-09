@@ -59,7 +59,7 @@ if (!$data) {
         <td><?= htmlspecialchars($row['id_pemesanan']); ?></td>
         <td><?= htmlspecialchars($row['pembeli']); ?></td>
         <td><?= htmlspecialchars($row['tanggal_batal']); ?></td>
-        <td><?= htmlspecialchars($row['alasan']); ?></td>
+        <td><?= htmlspecialchars($row['alasan']); ?><a class="btn btn-danger" href="hapus.php?id=<?= $row['id_pembatalan']; ?>" onclick="return confirm('Yakin hapus pembatalan ini?')">Hapus</a></td>
     </tr>
     <?php } ?>
 <?php } else { ?>

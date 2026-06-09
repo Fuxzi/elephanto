@@ -11,6 +11,8 @@ SELECT
     COALESCE(master_mobil.tipe, mobil.tipe) AS nama_tipe,
     detail_pemesanan.jumlah,
     transaksi.total,
+    transaksi.dp_booking,
+    transaksi.sisa_pembayaran,
     transaksi.metode_pembayaran,
     transaksi.status
 FROM transaksi
@@ -30,28 +32,13 @@ if (!$result) {
 <!DOCTYPE html>
 <html lang="id">
 <head>
-    <meta charset="UTF-8">
-    <title>Laporan Penjualan</title>
-    <link rel="stylesheet" href="../assets/css/style.css">
+<meta charset="UTF-8">
+<title>Laporan Penjualan</title>
+<link rel="stylesheet" href="../assets/css/style.css">
 </head>
 <body>
-<div class="header">
-    <div class="inner">
-        <h1>Sistem Penjualan Mobil Bekas</h1>
-        <div class="top-user">
-            <?php if (isset($_SESSION['role'])) { ?>
-                <span class="user-badge">
-                    <?= htmlspecialchars($_SESSION['role']); ?>
-                    <?php if (isset($_SESSION['username'])) { ?> / <?= htmlspecialchars($_SESSION['username']); ?><?php } ?>
-                </span>
-                <a class="logout-link" href="../logout.php">Logout</a>
-            <?php } ?>
-        </div>
-    </div>
-</div>
-
-<div class="container">
-<div class="card">
+<div class="header"><div class="inner"><h1>Sistem Penjualan Mobil Bekas</h1><div class="top-user"><?php if (isset($_SESSION['role'])) { ?><span class="user-badge"><?= htmlspecialchars($_SESSION['role']); ?><?php if (isset($_SESSION['username'])) { ?> / <?= htmlspecialchars($_SESSION['username']); ?><?php } ?></span><a class="logout-link" href="../logout.php">Logout</a><?php } ?></div></div></div>
+<div class="container"><div class="card">
 <h2>Laporan Penjualan</h2>
 <p class="subtitle">Riwayat transaksi penjualan mobil kepada pembeli.</p>
 
@@ -68,7 +55,9 @@ if (!$result) {
         <th>Mobil</th>
         <th>Jumlah</th>
         <th>Total</th>
-        <th>Metode Pembayaran</th>
+        <th>DP / Booking Fee</th>
+        <th>Sisa</th>
+        <th>Metode</th>
         <th>Status</th>
         <th>Aksi</th>
     </tr>
@@ -84,6 +73,8 @@ if (!$result) {
             <td><?= htmlspecialchars($row['nama_merk'] . " " . $row['nama_tipe']); ?></td>
             <td><?= htmlspecialchars($row['jumlah']); ?></td>
             <td>Rp <?= number_format($row['total'], 0, ',', '.'); ?></td>
+            <td>Rp <?= number_format($row['dp_booking'], 0, ',', '.'); ?></td>
+            <td>Rp <?= number_format($row['sisa_pembayaran'], 0, ',', '.'); ?></td>
             <td><?= htmlspecialchars($row['metode_pembayaran']); ?></td>
             <td><?= htmlspecialchars($row['status']); ?></td>
             <td>
@@ -92,12 +83,9 @@ if (!$result) {
         </tr>
         <?php } ?>
     <?php } else { ?>
-        <tr>
-            <td colspan="10">Belum ada data penjualan.</td>
-        </tr>
+        <tr><td colspan="12">Belum ada data penjualan.</td></tr>
     <?php } ?>
 </table>
-</div>
-</div>
+</div></div>
 </body>
 </html>

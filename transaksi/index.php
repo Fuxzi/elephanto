@@ -8,6 +8,8 @@ SELECT
     p.id_pemesanan,
     pb.nama AS pembeli,
     t.total,
+    t.dp_booking,
+    t.sisa_pembayaran,
     t.metode_pembayaran,
     t.status
 FROM transaksi t
@@ -24,26 +26,30 @@ if (!$data) {
 <!DOCTYPE html>
 <html lang="id">
 <head>
-    <link rel="stylesheet" href="../assets/css/style.css">
-    <meta charset="UTF-8">
-    <title>Data Transaksi</title>
+<meta charset="UTF-8">
+<title>Data Transaksi</title>
+<link rel="stylesheet" href="../assets/css/style.css">
 </head>
 <body>
 <div class="header"><div class="inner"><h1>Sistem Penjualan Mobil Bekas</h1><div class="top-user"><?php if (isset($_SESSION['role'])) { ?><span class="user-badge"><?= htmlspecialchars($_SESSION['role']); ?><?php if (isset($_SESSION['username'])) { ?> / <?= htmlspecialchars($_SESSION['username']); ?><?php } ?></span><a class="logout-link" href="../logout.php">Logout</a><?php } ?></div></div></div>
 <div class="container"><div class="card">
 <h2>Data Transaksi</h2>
+<p class="subtitle">Daftar pembayaran transaksi, termasuk DP / Booking Fee.</p>
 
-<a class="btn" href="tambah.php">+ Tambah Transaksi</a> |
-<a class="btn btn-secondary" href="../dashboard.php">Kembali</a>
-<br><br>
+<div class="toolbar">
+    <a class="btn" href="tambah.php">+ Tambah Transaksi</a>
+    <a class="btn btn-secondary" href="../dashboard.php">Kembali</a>
+</div>
 
-<table border="1" cellpadding="8" cellspacing="0">
+<table>
 <tr>
     <th>No</th>
     <th>ID Transaksi</th>
     <th>ID Pemesanan</th>
     <th>Nama Pembeli</th>
     <th>Total</th>
+    <th>DP / Booking Fee</th>
+    <th>Sisa Pembayaran</th>
     <th>Metode</th>
     <th>Status</th>
     <th>Aksi</th>
@@ -58,15 +64,15 @@ if (!$data) {
         <td><?= htmlspecialchars($row['id_pemesanan']); ?></td>
         <td><?= htmlspecialchars($row['pembeli']); ?></td>
         <td>Rp <?= number_format($row['total'], 0, ',', '.'); ?></td>
+        <td>Rp <?= number_format($row['dp_booking'], 0, ',', '.'); ?></td>
+        <td>Rp <?= number_format($row['sisa_pembayaran'], 0, ',', '.'); ?></td>
         <td><?= htmlspecialchars($row['metode_pembayaran']); ?></td>
         <td><?= htmlspecialchars($row['status']); ?></td>
-        <td><a class="btn btn-secondary" href="edit.php?id=<?= $row['id_transaksi']; ?>">Edit</a></td>
+        <td><a class="btn btn-secondary" href="edit.php?id=<?= $row['id_transaksi']; ?>">Edit</a> <a class="btn btn-danger" href="hapus.php?id=<?= $row['id_transaksi']; ?>" onclick="return confirm('Yakin hapus transaksi ini?')">Hapus</a></td>
     </tr>
     <?php } ?>
 <?php } else { ?>
-    <tr>
-        <td colspan="8">Belum ada data transaksi.</td>
-    </tr>
+    <tr><td colspan="10">Belum ada data transaksi.</td></tr>
 <?php } ?>
 </table>
 </div></div>

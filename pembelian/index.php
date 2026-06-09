@@ -71,7 +71,7 @@ if (!$data) {
         <td><?= htmlspecialchars($row['jumlah']); ?></td>
         <td>Rp <?= number_format($row['harga_beli'], 0, ',', '.'); ?></td>
         <td>Rp <?= number_format($row['total'], 0, ',', '.'); ?></td>
-        <td><a class="btn btn-secondary" href="edit.php?id=<?= $row['id_pembelian']; ?>">Edit</a></td>
+        <td><a class="btn btn-secondary" href="edit.php?id=<?= $row['id_pembelian']; ?>">Edit</a> <a class="btn btn-danger" href="hapus.php?id=<?= $row['id_pembelian']; ?>" onclick="return confirm('Yakin hapus pembelian ini?')">Hapus</a></td>
     </tr>
     <?php } ?>
 <?php } else { ?>
